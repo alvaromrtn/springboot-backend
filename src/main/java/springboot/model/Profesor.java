@@ -1,24 +1,25 @@
-package springboot.entity;
+package springboot.model;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "profesor")
 public class Profesor {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
-	
+
 	@Column(name = "apellidos", nullable = false)
 	private String apellidos;
-	
+
 	private String correo;
-	
-	public Profesor() {}
+
+	public Profesor() {
+	}
 
 	public long getId() {
 		return id;
@@ -51,5 +52,5 @@ public class Profesor {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	
+
 }

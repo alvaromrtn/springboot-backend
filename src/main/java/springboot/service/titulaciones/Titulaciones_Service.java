@@ -5,17 +5,33 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.springframework.stereotype.Service;
-import springboot.response.Titulaciones_Response;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import springboot.model.Titulacion;
 
 @Service
 public class Titulaciones_Service {
 
-	public List<Titulaciones_Response> getListadoTitulaciones() throws IOException {
+	public List<Titulacion> getListadoTitulaciones()
+			throws IOException, ParserConfigurationException, SAXException {
+		
+		List<Titulacion> titulaciones = new ArrayList<>();
 
 		// 1. Crear dirección de servicio
 		URL url = new URL("http://diaweb.usal.es/diaweb/services/Titulaciones.TitulacionesHttpSoap11Endpoint/");
@@ -36,7 +52,8 @@ public class Titulaciones_Service {
 		connection.setDoOutput(true);
 
 		// 4. Organizar datos SOAP y enviar solicitud
-		String soapXML = getXML("211"); // 211 INGENIERIA INFORMATICA
+		// String soapXML = getXML("211"); // 211 INGENIERIA INFORMATICA
+		String soapXML = getXML_Titulaciones();
 
 		/// Enviar la información en una secuencia
 		OutputStream os = connection.getOutputStream();
@@ -51,6 +68,7 @@ public class Titulaciones_Service {
 			BufferedReader br = new BufferedReader(isr);
 
 			StringBuilder sb = new StringBuilder();
+
 			String temp = null;
 			while (null != (temp = br.readLine())) {
 				sb.append(temp);
@@ -64,23 +82,79 @@ public class Titulaciones_Service {
 
 			// RESULTADO:
 			System.out.println("RESULTADO: " + sb.toString());
+
+			////////////////
+
+			InputSource inputSource = new InputSource(new StringReader(sb.toString()));
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document document = db.parse(inputSource);
+
+			document.getDocumentElement().normalize();
+			System.out.println("Root Element :" + document.getDocumentElement().getNodeName());
+
+			// --------
+
+			NodeList nList = document.getElementsByTagName("soapenv:Body");
+
+			Node nNode = nList.item(0);
+			
+			System.out.println("\nCurrent Element :" + nNode.getNodeName());
+			
+			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				
+				Element eElement = (Element) nNode;
+				
+				//System.out.println("eElement Length: " + eElement.getElementsByTagName("ns:return").getLength());
+				
+				int numero_titulaciones = eElement.getElementsByTagName("ns:return").getLength();
+				
+				for (int n=0; n<numero_titulaciones; n++) {
+					
+					Titulacion titulacion = new Titulacion();
+					
+					titulacion.setId(n);
+					titulacion.setCentro(eElement.getElementsByTagName("ax219:centro").item(n).getTextContent());
+					titulacion.setCodigo(eElement.getElementsByTagName("ax219:codigo").item(n).getTextContent());
+					titulacion.setNombre(eElement.getElementsByTagName("ax219:nombre").item(n).getTextContent());
+					titulacion.setNumeroCursos(Integer.parseInt(eElement.getElementsByTagName("ax219:numero_cursos").item(n).getTextContent()));
+					
+
+					titulaciones.add(titulacion);
+				}
+			
+
+			//////////////////////
+
+		}
+			
 		}
 		
-		return null;
+		
+
+		return titulaciones;
+
 	}
 
 	String getXML(String cod) {
-		
-		String soapXML =
-				"<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ser='http://serviciosweb'>" +
-				"<soapenv:Header/>" +
-				"<soapenv:Body>" +
-				"<ser:datosTitulacion>" +
-				"<ser:codigo_titulacion>" + cod + "</ser:codigo_titulacion>" +
-				"</ser:datosTitulacion>" +
-				"</soapenv:Body>" +
-				"</soapenv:Envelope>";
-		
+
+		String soapXML = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ser='http://serviciosweb'>"
+				+ "<soapenv:Header/>" + "<soapenv:Body>" + "<ser:datosTitulacion>" + "<ser:codigo_titulacion>" + cod
+				+ "</ser:codigo_titulacion>" + "</ser:datosTitulacion>" + "</soapenv:Body>" + "</soapenv:Envelope>";
+
+		return soapXML;
+	}
+
+	String getXML_Titulaciones() {
+
+		String soapXML = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ser='http://serviciosweb'>"
+				+ "<soapenv:Header/>"
+				+ "<soapenv:Body>"
+				+ "<ser:titulaciones/>"
+				+ "</soapenv:Body>"
+				+ "</soapenv:Envelope>";
+
 		return soapXML;
 	}
 

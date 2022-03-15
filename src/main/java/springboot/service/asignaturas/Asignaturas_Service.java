@@ -1,4 +1,4 @@
-package springboot.service.titulaciones;
+package springboot.service.asignaturas;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,30 +11,30 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
-import springboot.model.Titulacion;
+import springboot.model.Asignatura;
 
 @Service
-public class Titulaciones_Service {
+public class Asignaturas_Service {
 
-	public List<Titulacion> getListadoTitulaciones()
+	public List<Asignatura> getAsignaturasTitulacion(int codigo)
 			throws IOException, ParserConfigurationException, SAXException {
 		
-		List<Titulacion> titulaciones = new ArrayList<>();
+		List<Asignatura> asignaturas = new ArrayList<>();
 
 		// 1. Crear dirección de servicio
-		URL url = new URL("http://diaweb.usal.es/diaweb/services/Titulaciones.TitulacionesHttpSoap11Endpoint/");
+		URL url = new URL("http://diaweb.usal.es/diaweb/services/Asignaturas.AsignaturasHttpSoap11Endpoint/");
 
 		// 2. Abrir conexión a la dirección del servicio
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -52,8 +52,7 @@ public class Titulaciones_Service {
 		connection.setDoOutput(true);
 
 		// 4. Organizar datos SOAP y enviar solicitud
-		// String soapXML = getXML("211"); // 211 INGENIERIA INFORMATICA
-		String soapXML = getXML_Titulaciones();
+		String soapXML = getXML_AsignaturasTitulacion(String.valueOf(codigo));
 
 		/// Enviar la información en una secuencia
 		OutputStream os = connection.getOutputStream();
@@ -102,53 +101,48 @@ public class Titulaciones_Service {
 				
 				Element eElement = (Element) nNode;
 				
-				int numero_titulaciones = eElement.getElementsByTagName("ns:return").getLength();
+				int numero_asignaturas = eElement.getElementsByTagName("ns:return").getLength();
 				
-				for (int n=0; n<numero_titulaciones; n++) {
+				for (int n=0; n<numero_asignaturas; n++) {
 					
-					Titulacion titulacion = new Titulacion();
+					Asignatura asignatura = new Asignatura();
 					
-					titulacion.setId(n);
-					titulacion.setCentro(eElement.getElementsByTagName("ax219:centro").item(n).getTextContent());
-					titulacion.setCodigo(Integer.parseInt(eElement.getElementsByTagName("ax219:codigo").item(n).getTextContent()));
-					titulacion.setNombre(eElement.getElementsByTagName("ax219:nombre").item(n).getTextContent());
-					titulacion.setNumeroCursos(Integer.parseInt(eElement.getElementsByTagName("ax219:numero_cursos").item(n).getTextContent()));
+					asignatura.setId(n);
+					asignatura.setCaracterAsignatura(eElement.getElementsByTagName("ax211:caracter_asignatura").item(n).getTextContent());
+					asignatura.setCodigoAsignatura(Integer.parseInt(eElement.getElementsByTagName("ax211:codigo_asignatura").item(n).getTextContent()));
+					asignatura.setCodigoOcurrencia(Integer.parseInt(eElement.getElementsByTagName("ax211:codigo_ocurrencia").item(n).getTextContent()));
+					asignatura.setCreditosPractica(Float.parseFloat(eElement.getElementsByTagName("ax211:creditos_practica").item(n).getTextContent()));
+					asignatura.setCreditosTeoria(Float.parseFloat(eElement.getElementsByTagName("ax211:creditos_teoria").item(n).getTextContent()));
+					asignatura.setCursoAsignatura(Integer.parseInt(eElement.getElementsByTagName("ax211:curso_asignatura").item(n).getTextContent()));
+					asignatura.setNombreAsignatura(eElement.getElementsByTagName("ax211:nombre_asignatura").item(n).getTextContent());
+					asignatura.setPeriodoAsignatura(eElement.getElementsByTagName("ax211:periodo_asignatura").item(n).getTextContent());
+					asignatura.setResponsableAsignatura(eElement.getElementsByTagName("ax211:responsable_asignatura").item(n).getTextContent());
+					asignatura.setTitulacionAsignatura(eElement.getElementsByTagName("ax211:titulacion_asignatura").item(n).getTextContent());
 					
-
-					titulaciones.add(titulacion);
+					asignaturas.add(asignatura);
 				}
 
 			}
 			
 		}
-
-		return titulaciones;
+		
+		return asignaturas;
 	}
 
-	String getXML_AsignaturasTitulacion(String codigo) {
+	String getXML_AsignaturasTitulacion(String codigo_titulacion) {
 
 		String soapXML = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ser='http://serviciosweb'>"
 				+ "<soapenv:Header/>"
 				+ "<soapenv:Body>"
-				+ "<ser:datosTitulacion>"
-				+ "<ser:codigo_titulacion>" + codigo + "</ser:codigo_titulacion>"
-				+ "</ser:datosTitulacion>"
+				+ "<ser:asignaturasTitulacion>"
+				+ "<ser:codigo_titulacion>" + codigo_titulacion + "</ser:codigo_titulacion>"
+				+ "</ser:asignaturasTitulacion>"
 				+ "</soapenv:Body>"
 				+ "</soapenv:Envelope>";
 
 		return soapXML;
 	}
 
-	String getXML_Titulaciones() {
-
-		String soapXML = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ser='http://serviciosweb'>"
-				+ "<soapenv:Header/>"
-				+ "<soapenv:Body>"
-				+ "<ser:titulaciones/>"
-				+ "</soapenv:Body>"
-				+ "</soapenv:Envelope>";
-
-		return soapXML;
-	}
 
 }
+

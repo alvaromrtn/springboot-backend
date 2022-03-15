@@ -16,7 +16,7 @@ public class Titulacion {
 	private String centro;
 
 	@Column(name = "codigo", nullable = false)
-	private String codigo;
+	private int codigo;
 
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
@@ -43,11 +43,11 @@ public class Titulacion {
 		this.centro = centro;
 	}
 
-	public String getCodigo() {
+	public int getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(String codigo) {
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 

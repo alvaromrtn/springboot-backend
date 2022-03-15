@@ -1,7 +1,6 @@
 package springboot.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
-import springboot.model.Profesor;
 import springboot.model.Titulacion;
 import springboot.service.titulaciones.Titulaciones_Service;
 

@@ -23,25 +23,24 @@ public class Asignatura {
 
 	@Column(name = "creditos_practica", nullable = false)
 	private float creditos_practica;
-	
+
 	@Column(name = "creditos_teoria", nullable = false)
 	private float creditos_teoria;
-	
+
 	@Column(name = "curso_asignatura", nullable = false)
 	private int curso_asignatura;
-	
+
 	@Column(name = "nombre_asignatura", nullable = false)
 	private String nombre_asignatura;
-	
+
 	@Column(name = "periodo_asignatura", nullable = false)
 	private String periodo_asignatura;
-	
+
 	@Column(name = "responsable_asignatura", nullable = false)
 	private String responsable_asignatura;
 
 	@Column(name = "titulacion_asignatura", nullable = false)
 	private String titulacion_asignatura;
-
 
 	public Asignatura() {
 	}
@@ -85,7 +84,7 @@ public class Asignatura {
 	public void setCreditosPractica(float creditos_practica) {
 		this.creditos_practica = creditos_practica;
 	}
-	
+
 	public float getCreditosTeoria() {
 		return creditos_teoria;
 	}
@@ -125,7 +124,7 @@ public class Asignatura {
 	public void setResponsableAsignatura(String responsable_asignatura) {
 		this.responsable_asignatura = responsable_asignatura;
 	}
-	
+
 	public String getTitulacionAsignatura() {
 		return titulacion_asignatura;
 	}

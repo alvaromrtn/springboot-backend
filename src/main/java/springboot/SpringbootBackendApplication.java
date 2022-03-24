@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "TFG API (CAMBIAR TITULO) ", version = "2.0 (CAMBIAR V)", description = "DESCRIPCION (CAMBIAR)"))
+@OpenAPIDefinition(info = @Info(title = "TFG API (CAMBIAR TITULO) ", version = "2.0 (CAMBIAR VERSION)", description = "DESCRIPCION (CAMBIAR DESCRIPCION)"))
 public class SpringbootBackendApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {

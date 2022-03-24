@@ -16,7 +16,7 @@ import springboot.model.Profesor;
 public class Profesor_Controller {
 
 	@GetMapping("/profesores")
-	public List<Profesor> buscarEmpleados() {
+	public List<Profesor> getProfesores() {
 
 		List<Profesor> profesores = new ArrayList<Profesor>();
 

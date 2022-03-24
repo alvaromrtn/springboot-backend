@@ -26,13 +26,14 @@ public class Asignaturas_Controller {
 	private Asignaturas_Service asignaturas_Service;
 
 	@PostMapping("/asignaturas")
-	public List<Asignatura> buscarEmpleados(@RequestBody Asignatura_Request data) throws IOException, ParserConfigurationException, SAXException {
-		
-		int codigo = data.getCodigo();
-				
-		List<Asignatura> asignaturas = asignaturas_Service.getAsignaturasTitulacion(codigo);
+	public List<Asignatura> getAsignaturasTitulacion(@RequestBody Asignatura_Request data)
+			throws IOException, ParserConfigurationException, SAXException {
+
+		int codigo_titulacion = data.getCodigo();
+
+		List<Asignatura> asignaturas = asignaturas_Service.getAsignaturasTitulacion(codigo_titulacion);
 
 		return asignaturas;
 	}
-	
+
 }

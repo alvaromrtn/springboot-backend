@@ -1,9 +1,9 @@
 package springboot.request;
 
 public class Grupo_Request {
-	
+
 	private int codigo;
-	
+
 	public Grupo_Request() {
 	}
 

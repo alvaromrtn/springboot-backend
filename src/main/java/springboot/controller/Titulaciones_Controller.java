@@ -24,16 +24,11 @@ public class Titulaciones_Controller {
 	private Titulaciones_Service titulaciones_Service;
 
 	@GetMapping("/titulaciones")
-	public List<Titulacion> buscarEmpleados() throws IOException, ParserConfigurationException, SAXException {
+	public List<Titulacion> getTitulaciones() throws IOException, ParserConfigurationException, SAXException {
 
-		
 		List<Titulacion> titulaciones = titulaciones_Service.getListadoTitulaciones();
-		
 
-		System.out.print("NUMERO TITULACIONES: " + titulaciones.size());
-		
 		return titulaciones;
-
 	}
-	
+
 }

@@ -25,28 +25,30 @@ public class Grupos_Controller {
 
 	@Autowired
 	private GruposTeoria_Service gruposTeoria_Service;
-	
+
 	@Autowired
 	private GruposPractica_Service gruposPractica_Service;
 
 	@PostMapping("/gruposTeoria")
-	public List<Grupo> getGruposTeoria(@RequestBody Grupo_Request data) throws IOException, ParserConfigurationException, SAXException {
-		
-		int codigo = data.getCodigo();
-				
-		List<Grupo> gruposTeoria = gruposTeoria_Service.getGruposTeoria(codigo);
+	public List<Grupo> getGruposTeoria(@RequestBody Grupo_Request data)
+			throws IOException, ParserConfigurationException, SAXException {
+
+		int codigo_asignatura = data.getCodigo();
+
+		List<Grupo> gruposTeoria = gruposTeoria_Service.getGruposTeoria(codigo_asignatura);
 
 		return gruposTeoria;
 	}
-	
+
 	@PostMapping("/gruposPractica")
-	public List<Grupo> getGruposPractica(@RequestBody Grupo_Request data) throws IOException, ParserConfigurationException, SAXException {
-		
-		int codigo = data.getCodigo();
-				
-		List<Grupo> gruposPractica = gruposPractica_Service.getGruposPractica(codigo);
+	public List<Grupo> getGruposPractica(@RequestBody Grupo_Request data)
+			throws IOException, ParserConfigurationException, SAXException {
+
+		int codigo_asignatura = data.getCodigo();
+
+		List<Grupo> gruposPractica = gruposPractica_Service.getGruposPractica(codigo_asignatura);
 
 		return gruposPractica;
 	}
-	
+
 }

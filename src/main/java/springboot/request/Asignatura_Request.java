@@ -1,9 +1,9 @@
 package springboot.request;
 
 public class Asignatura_Request {
-	
+
 	private int codigo;
-	
+
 	public Asignatura_Request() {
 	}
 

@@ -125,20 +125,6 @@ public class Titulaciones_Service {
 		return titulaciones;
 	}
 
-	String getXML_AsignaturasTitulacion(String codigo) {
-
-		String soapXML = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ser='http://serviciosweb'>"
-				+ "<soapenv:Header/>"
-				+ "<soapenv:Body>"
-				+ "<ser:datosTitulacion>"
-				+ "<ser:codigo_titulacion>" + codigo + "</ser:codigo_titulacion>"
-				+ "</ser:datosTitulacion>"
-				+ "</soapenv:Body>"
-				+ "</soapenv:Envelope>";
-
-		return soapXML;
-	}
-
 	String getXML_Titulaciones() {
 
 		String soapXML = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ser='http://serviciosweb'>"

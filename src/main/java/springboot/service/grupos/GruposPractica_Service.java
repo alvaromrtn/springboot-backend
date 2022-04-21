@@ -97,27 +97,29 @@ public class GruposPractica_Service {
 
 				int numero_grupos = eElement.getElementsByTagName("ns:return").getLength();
 
-				for (int n = 0; n < numero_grupos; n++) {
-
-					Grupo grupo = new Grupo();
-
-					grupo.setId(n);
-					grupo.setCodigoAula(Integer.parseInt(eElement.getElementsByTagName("ax21:codigo_aula").item(n).getTextContent()));
-					grupo.setCodigoGrupo(Integer.parseInt(eElement.getElementsByTagName("ax21:codigo_grupo").item(n).getTextContent()));
-					grupo.setCodigoProfesor(Integer.parseInt(eElement.getElementsByTagName("ax21:codigo_profesor").item(n).getTextContent()));
-					grupo.setHorarioDiaSemana(Integer.parseInt(eElement.getElementsByTagName("ax21:horario_dia_semana").item(n).getTextContent()));
-					grupo.setHorarioHoraFin(eElement.getElementsByTagName("ax21:horario_hora_fin").item(n).getTextContent());
-					grupo.setHorarioHoraInicio(eElement.getElementsByTagName("ax21:horario_hora_inicio").item(n).getTextContent());
-					grupo.setHorarioQuincenal(eElement.getElementsByTagName("ax21:horario_quincenal").item(n).getTextContent());
-					grupo.setNombreAsignatura(eElement.getElementsByTagName("ax21:nombre_asignatura").item(n).getTextContent());
-					grupo.setNombreAula(eElement.getElementsByTagName("ax21:nombre_aula").item(n).getTextContent());
-					grupo.setNombreEdificio(eElement.getElementsByTagName("ax21:nombre_edificio").item(n).getTextContent());
-					grupo.setNombreGrupo(eElement.getElementsByTagName("ax21:nombre_grupo").item(n).getTextContent());
-					grupo.setNombreProfesor(eElement.getElementsByTagName("ax21:nombre_profesor").item(n).getTextContent());
-					grupo.setNumeroAlumnos(Integer.parseInt(eElement.getElementsByTagName("ax21:numero_alumnos").item(n).getTextContent()));
-					grupo.setPeriodo(eElement.getElementsByTagName("ax21:periodo").item(n).getTextContent());
-
-					gruposPractica.add(grupo);
+				if (numero_grupos > 1) {
+					for (int n = 0; n < numero_grupos; n++) {
+	
+						Grupo grupo = new Grupo();
+	
+						grupo.setId(n);
+						grupo.setCodigoAula(Integer.parseInt(eElement.getElementsByTagName("ax21:codigo_aula").item(n).getTextContent()));
+						grupo.setCodigoGrupo(Integer.parseInt(eElement.getElementsByTagName("ax21:codigo_grupo").item(n).getTextContent()));
+						grupo.setCodigoProfesor(Integer.parseInt(eElement.getElementsByTagName("ax21:codigo_profesor").item(n).getTextContent()));
+						grupo.setHorarioDiaSemana(Integer.parseInt(eElement.getElementsByTagName("ax21:horario_dia_semana").item(n).getTextContent()));
+						grupo.setHorarioHoraFin(eElement.getElementsByTagName("ax21:horario_hora_fin").item(n).getTextContent());
+						grupo.setHorarioHoraInicio(eElement.getElementsByTagName("ax21:horario_hora_inicio").item(n).getTextContent());
+						grupo.setHorarioQuincenal(eElement.getElementsByTagName("ax21:horario_quincenal").item(n).getTextContent());
+						grupo.setNombreAsignatura(eElement.getElementsByTagName("ax21:nombre_asignatura").item(n).getTextContent());
+						grupo.setNombreAula(eElement.getElementsByTagName("ax21:nombre_aula").item(n).getTextContent());
+						grupo.setNombreEdificio(eElement.getElementsByTagName("ax21:nombre_edificio").item(n).getTextContent());
+						grupo.setNombreGrupo(eElement.getElementsByTagName("ax21:nombre_grupo").item(n).getTextContent());
+						grupo.setNombreProfesor(eElement.getElementsByTagName("ax21:nombre_profesor").item(n).getTextContent());
+						grupo.setNumeroAlumnos(Integer.parseInt(eElement.getElementsByTagName("ax21:numero_alumnos").item(n).getTextContent()));
+						grupo.setPeriodo(eElement.getElementsByTagName("ax21:periodo").item(n).getTextContent());
+	
+						gruposPractica.add(grupo);
+					}
 				}
 
 			}

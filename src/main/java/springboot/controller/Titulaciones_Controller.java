@@ -17,7 +17,8 @@ import springboot.service.titulaciones.Titulaciones_Service;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://localhost:8081/")
+//@CrossOrigin("http://localhost:8081/")
+@CrossOrigin(origins = "*", allowedHeaders="*")
 public class Titulaciones_Controller {
 
 	@Autowired

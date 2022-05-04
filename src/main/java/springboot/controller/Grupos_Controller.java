@@ -20,7 +20,9 @@ import springboot.service.grupos.GruposTeoria_Service;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://localhost:8081/")
+//@CrossOrigin("http://localhost:8081/")
+//@CrossOrigin("*")
+@CrossOrigin(origins = "*", allowedHeaders="*")
 public class Grupos_Controller {
 
 	@Autowired

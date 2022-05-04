@@ -19,7 +19,8 @@ import springboot.service.asignaturas.Asignaturas_Service;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://localhost:8081/")
+//@CrossOrigin("http://localhost:8081/")
+@CrossOrigin(origins = "*", allowedHeaders="*")
 public class Asignaturas_Controller {
 
 	@Autowired

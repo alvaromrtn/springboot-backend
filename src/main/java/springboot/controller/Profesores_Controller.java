@@ -72,9 +72,9 @@ public class Profesores_Controller {
 			Iterator<Cell> cellIterator = nextRow.cellIterator();
 			while (cellIterator.hasNext()) {
 				Cell cell = cellIterator.next();
-				if (cell.getColumnIndex() >= 19) {// obtiene la celda especifica
+				if (cell.getColumnIndex() >= 20) {// obtiene la celda especifica
 
-					if (cell.getColumnIndex() % 2 != 0) {
+					if (cell.getColumnIndex() % 2 == 0) {
 						String contenidoCelda = formatter.formatCellValue(cell);
 						System.out.println("celda: " + contenidoCelda + " - fila: " + cell.getRowIndex()
 								+ " - columna: " + cell.getColumnIndex());

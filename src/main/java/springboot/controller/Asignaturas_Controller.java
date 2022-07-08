@@ -7,6 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
 import springboot.model.Asignatura;
+import springboot.model.AsignaturaExcel;
 import springboot.request.Asignatura_Request;
+import springboot.service.asignaturas.AsignaturasExcel_Service;
 import springboot.service.asignaturas.Asignaturas_Service;
 
 @RestController
@@ -25,6 +28,9 @@ public class Asignaturas_Controller {
 
 	@Autowired
 	private Asignaturas_Service asignaturas_Service;
+	
+	@Autowired
+	private AsignaturasExcel_Service asignaturasExcel_Service;
 
 	@PostMapping("/asignaturas")
 	public List<Asignatura> getAsignaturasTitulacion(@RequestBody Asignatura_Request data)
@@ -33,6 +39,15 @@ public class Asignaturas_Controller {
 		int codigo_titulacion = data.getCodigo();
 
 		List<Asignatura> asignaturas = asignaturas_Service.getAsignaturasTitulacion(codigo_titulacion);
+
+		return asignaturas;
+	}
+	
+	@GetMapping("/asignaturas_excel")
+	public List<AsignaturaExcel> getAsignaturas()
+			throws IOException, ParserConfigurationException, SAXException {
+		
+		List<AsignaturaExcel> asignaturas = asignaturasExcel_Service.getAsignaturas();
 
 		return asignaturas;
 	}

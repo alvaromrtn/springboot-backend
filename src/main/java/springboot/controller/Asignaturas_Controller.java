@@ -1,6 +1,8 @@
 package springboot.controller;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,7 +36,7 @@ public class Asignaturas_Controller {
 
 	@PostMapping("/asignaturas")
 	public List<Asignatura> getAsignaturasTitulacion(@RequestBody Asignatura_Request data)
-			throws IOException, ParserConfigurationException, SAXException {
+			throws IOException, ParserConfigurationException, SAXException, KeyManagementException, NoSuchAlgorithmException {
 
 		int codigo_titulacion = data.getCodigo();
 

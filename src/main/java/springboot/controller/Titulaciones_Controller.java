@@ -1,10 +1,13 @@
 package springboot.controller;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.xmlbeans.impl.soap.SOAPException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +28,7 @@ public class Titulaciones_Controller {
 	private Titulaciones_Service titulaciones_Service;
 
 	@GetMapping("/titulaciones")
-	public List<Titulacion> getTitulaciones() throws IOException, ParserConfigurationException, SAXException {
+	public List<Titulacion> getTitulaciones() throws IOException, ParserConfigurationException, SAXException, UnsupportedOperationException, NoSuchAlgorithmException, SOAPException, KeyManagementException {
 
 		List<Titulacion> titulaciones = titulaciones_Service.getListadoTitulaciones();
 

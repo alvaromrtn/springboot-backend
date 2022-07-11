@@ -6,8 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.StringReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,44 +21,61 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import springboot.model.Titulacion;
+import springboot.utils.Utils;
+import springboot.utils.Utils.TrustAllCertificates;
 
 @Service
 public class Titulaciones_Service {
 
-	public List<Titulacion> getListadoTitulaciones() throws IOException, ParserConfigurationException, SAXException {
+	public List<Titulacion> getListadoTitulaciones() throws NoSuchAlgorithmException, KeyManagementException,
+			IOException, ParserConfigurationException, SAXException {
 
 		List<Titulacion> titulaciones = new ArrayList<>();
 
 		// 1. Crear dirección del servicio
-		URL url = new URL("http://diaweb.usal.es/diaweb/services/Titulaciones.TitulacionesHttpSoap11Endpoint/");
+		URL url = new URL("https://diaweb.usal.es/diaweb/services/Titulaciones.TitulacionesHttpSoap11Endpoint/");
 
-		// 2. Abrir conexión a la dirección del servicio
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		// 2. Crear contexto SSL y confiar en todos los certificados
+		SSLContext sslContext = SSLContext.getInstance("SSL");
+		TrustManager[] trustAll = new TrustManager[] { new TrustAllCertificates() };
+		sslContext.init(null, trustAll, new java.security.SecureRandom());
+		
+		// - 2.1 Establecer el contexto de confianza en todos los certificados en HttpsURLConnection
+		HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+		
+		// 3. Abrir conexión a la dirección del servicio
+		HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
-		// 3. Establecer los parámetros:
-		// - 3.1 Configuración del modo de envío: GET
+		// 4. Establecer los parámetros:
+		// - 4.1 Configuración del modo de envío: GET
 		connection.setRequestMethod("GET");
 
-		// - 3.2 Establecer el formato de datos: Tipo de contenido
+		// - 4.2 Establecer el formato de datos: Tipo de contenido
 		connection.setRequestProperty("content-type", "text/xml;charset=utf-8");
 
-		// - 3.3 Establecer entrada y salida, la conexión predeterminada recién creada
+		// - 4.3 Establecer entrada y salida, la conexión predeterminada recién creada
 		// no tiene permisos de lectura y escritura
 		connection.setDoInput(true);
 		connection.setDoOutput(true);
+		
+		// - 4.4 Confiar en todos los anfitriones
+		connection.setHostnameVerifier(new Utils.TrustAllHosts());
 
-		// 4. Crear solicitud SOAP
+		// 5. Crear solicitud SOAP
 		String soapXML = getXML_Titulaciones();
 
-		// 5. Enviar solicitud SOAP en una secuencia
+		// 6. Enviar solicitud SOAP en una secuencia
 		OutputStream os = connection.getOutputStream();
 		os.write(soapXML.getBytes());
 
-		// 6. Recibir respuesta del servidor y guardar datos
+		// 7. Recibir respuesta del servidor y guardar datos
 		int responseCode = connection.getResponseCode();
 		if (200 == responseCode) { // El servidor respondió con éxito
 			// Obtener flujo de datos devuelto por la solicitud de conexión actual
@@ -113,12 +131,15 @@ public class Titulaciones_Service {
 
 		}
 
+		// 8. Cerrar la conexión a la dirección del servicio
+		connection.disconnect();
+
 		return titulaciones;
 	}
 
 	String getXML_Titulaciones() {
 
-		String soapXML =	"<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ser='http://serviciosweb'>" +
+		String soapXML = 	"<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ser='http://serviciosweb'>" +
 							"<soapenv:Header/>" +
 							"<soapenv:Body>" +
 							"<ser:titulaciones/>" +

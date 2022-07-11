@@ -1,6 +1,8 @@
 package springboot.controller;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,7 +35,7 @@ public class Grupos_Controller {
 
 	@PostMapping("/gruposTeoria")
 	public List<Grupo> getGruposTeoria(@RequestBody Grupo_Request data)
-			throws IOException, ParserConfigurationException, SAXException {
+			throws IOException, ParserConfigurationException, SAXException, KeyManagementException, NoSuchAlgorithmException {
 
 		int codigo_asignatura = data.getCodigo();
 
@@ -44,7 +46,7 @@ public class Grupos_Controller {
 
 	@PostMapping("/gruposPractica")
 	public List<Grupo> getGruposPractica(@RequestBody Grupo_Request data)
-			throws IOException, ParserConfigurationException, SAXException {
+			throws IOException, ParserConfigurationException, SAXException, KeyManagementException, NoSuchAlgorithmException {
 
 		int codigo_asignatura = data.getCodigo();
 

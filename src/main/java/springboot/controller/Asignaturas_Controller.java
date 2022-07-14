@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
-import springboot.model.AsignaturaDiaweb;
+import springboot.model.AsignaturaTitulacion;
 import springboot.model.Asignatura;
 import springboot.request.Asignatura_Request;
 import springboot.request.Profesor_Request;
-import springboot.service.asignaturas.AsignaturasDiaweb_Service;
+import springboot.service.asignaturas.AsignaturasTitulacion_Service;
 import springboot.service.asignaturas.Asignaturas_Service;
 
 @RestController
@@ -29,18 +29,18 @@ import springboot.service.asignaturas.Asignaturas_Service;
 public class Asignaturas_Controller {
 
 	@Autowired
-	private AsignaturasDiaweb_Service asignaturasDiaweb_Service;
+	private AsignaturasTitulacion_Service asignaturasTitulacion_Service;
 
 	@Autowired
 	private Asignaturas_Service asignaturas_Service;
 
-	@PostMapping("/asignaturas_diaweb")
-	public List<AsignaturaDiaweb> getAsignaturasTitulacion(@RequestBody Asignatura_Request data) throws IOException,
+	@PostMapping("/asignaturasTitulacion")
+	public List<AsignaturaTitulacion> getAsignaturasTitulacion(@RequestBody Asignatura_Request data) throws IOException,
 			ParserConfigurationException, SAXException, KeyManagementException, NoSuchAlgorithmException {
 
 		int codigo_titulacion = data.getCodigo();
 
-		List<AsignaturaDiaweb> asignaturas = asignaturasDiaweb_Service.getAsignaturasTitulacion(codigo_titulacion);
+		List<AsignaturaTitulacion> asignaturas = asignaturasTitulacion_Service.getAsignaturasTitulacion(codigo_titulacion);
 
 		return asignaturas;
 	}

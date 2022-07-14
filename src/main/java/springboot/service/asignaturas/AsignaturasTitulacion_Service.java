@@ -27,17 +27,17 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import springboot.model.AsignaturaDiaweb;
+import springboot.model.AsignaturaTitulacion;
 import springboot.utils.Utils;
 import springboot.utils.Utils.TrustAllCertificates;
 
 @Service
-public class AsignaturasDiaweb_Service {
+public class AsignaturasTitulacion_Service {
 
-	public List<AsignaturaDiaweb> getAsignaturasTitulacion(int codigo_titulacion) throws NoSuchAlgorithmException,
+	public List<AsignaturaTitulacion> getAsignaturasTitulacion(int codigo_titulacion) throws NoSuchAlgorithmException,
 			KeyManagementException, IOException, ParserConfigurationException, SAXException {
 
-		List<AsignaturaDiaweb> asignaturas = new ArrayList<>();
+		List<AsignaturaTitulacion> asignaturas = new ArrayList<>();
 
 		// 1. Crear dirección del servicio
 		URL url = new URL("https://diaweb.usal.es/diaweb/services/Asignaturas.AsignaturasHttpSoap11Endpoint/");
@@ -116,7 +116,7 @@ public class AsignaturasDiaweb_Service {
 
 				for (int n = 0; n < numero_asignaturas; n++) {
 
-					AsignaturaDiaweb asignatura = new AsignaturaDiaweb();
+					AsignaturaTitulacion asignatura = new AsignaturaTitulacion();
 
 					asignatura.setId(n);
 					asignatura.setCaracterAsignatura(eElement.getElementsByTagName("ax211:caracter_asignatura").item(n).getTextContent());

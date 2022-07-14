@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "asignatura")
-public class AsignaturaDiaweb {
+public class AsignaturaTitulacion {
 
 	@Id
 	private long id;
@@ -42,7 +42,7 @@ public class AsignaturaDiaweb {
 	@Column(name = "titulacion_asignatura", nullable = false)
 	private String titulacion_asignatura;
 
-	public AsignaturaDiaweb() {
+	public AsignaturaTitulacion() {
 	}
 
 	public long getId() {

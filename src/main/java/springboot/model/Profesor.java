@@ -16,6 +16,9 @@ public class Profesor {
 	@Column(name = "apellidos", nullable = false)
 	private String apellidos;
 
+	@Column(name = "nombre_completo", nullable = false)
+	private String nombre_completo;
+
 	@Column(name = "horas", nullable = false)
 	private float horas;
 
@@ -44,6 +47,14 @@ public class Profesor {
 
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
+	}
+
+	public String getNombreCompleto() {
+		return nombre_completo;
+	}
+
+	public void setNombreCompleto(String nombre_completo) {
+		this.nombre_completo = nombre_completo;
 	}
 
 	public float getHoras() {

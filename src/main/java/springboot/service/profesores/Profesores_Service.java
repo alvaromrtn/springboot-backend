@@ -14,10 +14,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
+import springboot.config.Config;
 import springboot.model.Profesor;
+import springboot.utils.ObtenerNombreApellidos;
 
 @Service
-public class ProfesoresExcel_Service {
+public class Profesores_Service {
 
 	public List<Profesor> getProfesores() {
 
@@ -25,51 +27,53 @@ public class ProfesoresExcel_Service {
 		List<Float> horas = new ArrayList<>();
 
 		try {
-			String rutaArchivoExcel = "./././bd/nuevo-excel.xlsx";
+			String rutaArchivoExcel = Config.DATABASE;
 			File fichero = new File(rutaArchivoExcel);
 			FileInputStream inputStream = new FileInputStream(fichero);
 
 			try (Workbook workbook = new XSSFWorkbook(inputStream)) {
-				Sheet firstSheet = workbook.getSheetAt(0);
-				Iterator<Row> iterator = firstSheet.iterator();
+				Sheet primeraHoja = workbook.getSheetAt(0);
+				Iterator<Row> iterador = primeraHoja.iterator();
 
-				DataFormatter formatter = new DataFormatter();
+				DataFormatter formateador = new DataFormatter();
 
-				while (iterator.hasNext()) {
+				while (iterador.hasNext()) {
 
-					Row nextRow = iterator.next();
-					Iterator<Cell> cellIterator = nextRow.cellIterator();
+					Row siguienteFila = iterador.next();
+					Iterator<Cell> iteradorCelda = siguienteFila.cellIterator();
 
-					while (cellIterator.hasNext()) {
-						Cell cell = cellIterator.next();
+					while (iteradorCelda.hasNext()) {
+						Cell celda = iteradorCelda.next();
 
-						if (cell.getColumnIndex() >= 20 && cell.getRowIndex() == 0) {
+						if (celda.getColumnIndex() >= 20 && celda.getRowIndex() == 0) {
 
-							if (cell.getColumnIndex() % 2 == 0) {
-								String contenidoCelda = formatter.formatCellValue(cell);
+							if (celda.getColumnIndex() % 2 == 0) {
+								String contenidoCelda = formateador.formatCellValue(celda);
 
 								Profesor profesor = new Profesor();
 
-								profesor.setId(cell.getColumnIndex());
-								profesor.setNombre(contenidoCelda);
-								profesor.setApellidos("");
+								profesor.setId(celda.getColumnIndex());
+								profesor.setNombre(ObtenerNombreApellidos.getNombre(contenidoCelda));
+								profesor.setApellidos(ObtenerNombreApellidos.getApellidos(contenidoCelda));
+								profesor.setNombreCompleto(ObtenerNombreApellidos
+										.getNombreCompleto(profesor.getNombre(), profesor.getApellidos()));
 
 								profesores.add(profesor);
 							}
 						}
 
-						if (cell.getColumnIndex() >= 20 && cell.getRowIndex() == 2) {
+						if (celda.getColumnIndex() >= 20 && celda.getRowIndex() == 2) {
 
-							if (cell.getColumnIndex() % 2 == 0) {
+							if (celda.getColumnIndex() % 2 == 0) {
 
-								String contenidoCelda = formatter.formatCellValue(cell);
+								String contenidoCelda = formateador.formatCellValue(celda);
 								String nuevoContenido = contenidoCelda.replace(",", ".");
 
 								horas.add(Float.parseFloat(nuevoContenido));
 							}
 						}
 
-						if (cell.getRowIndex() == 3)
+						if (celda.getRowIndex() == 3)
 							break;
 					}
 				}

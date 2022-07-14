@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
+import springboot.config.Config;
 import springboot.model.AsignaturaExcel;
 
 @Service
@@ -24,7 +25,7 @@ public class AsignaturasExcel_Service {
 		List<AsignaturaExcel> asignaturas = new ArrayList<>();
 
 		try {
-			String rutaArchivoExcel = "./././bd/nuevo-excel.xlsx";
+			String rutaArchivoExcel = Config.DATABASE;
 			File fichero = new File(rutaArchivoExcel);
 			FileInputStream inputStream = new FileInputStream(fichero);
 
@@ -83,7 +84,7 @@ public class AsignaturasExcel_Service {
 		List<AsignaturaExcel> asignaturas = new ArrayList<>();
 
 		try {
-			String rutaArchivoExcel = "./././bd/nuevo-excel.xlsx";
+			String rutaArchivoExcel = Config.DATABASE;
 			File fichero = new File(rutaArchivoExcel);
 			FileInputStream inputStream = new FileInputStream(fichero);
 
@@ -125,7 +126,7 @@ public class AsignaturasExcel_Service {
 							if (cell.getColumnIndex() == columna_profesor) {
 								String nuevoContenido = contenidoCelda.replace(",", ".");
 								asignatura.setHorasTotales(Float.parseFloat(nuevoContenido));
-								
+
 								asignatura.setId(cell.getRowIndex());
 								asignaturas.add(asignatura);
 							}

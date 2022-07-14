@@ -12,21 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import springboot.model.Profesor;
-import springboot.service.profesores.ProfesoresExcel_Service;
+import springboot.service.profesores.Profesores_Service;
 
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin("http://localhost:8081/")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Profesores_Controller {
 
 	@Autowired
-	private ProfesoresExcel_Service profesoresExcel_Service;
+	private Profesores_Service profesores_Service;
 
-	@GetMapping("/profesores_excel")
+	@GetMapping("/profesores")
 	public List<Profesor> getProfesores() throws FileNotFoundException, IOException, InvalidFormatException {
 
-		List<Profesor> profesores = profesoresExcel_Service.getProfesores();
+		List<Profesor> profesores = profesores_Service.getProfesores();
 
 		return profesores;
 	}

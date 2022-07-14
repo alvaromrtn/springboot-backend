@@ -22,6 +22,7 @@ public class ProfesoresExcel_Service {
 	public List<Profesor> getProfesores() {
 
 		List<Profesor> profesores = new ArrayList<>();
+		List<Float> horas = new ArrayList<>();
 
 		try {
 			String rutaArchivoExcel = "./././bd/nuevo-excel.xlsx";
@@ -34,32 +35,51 @@ public class ProfesoresExcel_Service {
 
 				DataFormatter formatter = new DataFormatter();
 
-				Row nextRow = iterator.next();
-				Iterator<Cell> cellIterator = nextRow.cellIterator();
+				while (iterator.hasNext()) {
 
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
+					Row nextRow = iterator.next();
+					Iterator<Cell> cellIterator = nextRow.cellIterator();
 
-					if (cell.getColumnIndex() >= 20) {
+					while (cellIterator.hasNext()) {
+						Cell cell = cellIterator.next();
 
-						if (cell.getColumnIndex() % 2 == 0) {
-							String contenidoCelda = formatter.formatCellValue(cell);
+						if (cell.getColumnIndex() >= 20 && cell.getRowIndex() == 0) {
 
-							Profesor profesor = new Profesor();
+							if (cell.getColumnIndex() % 2 == 0) {
+								String contenidoCelda = formatter.formatCellValue(cell);
 
-							profesor.setId(cell.getColumnIndex());
-							profesor.setNombre(contenidoCelda);
-							profesor.setApellidos("");
-							profesor.setCorreo("");
+								Profesor profesor = new Profesor();
 
-							profesores.add(profesor);
+								profesor.setId(cell.getColumnIndex());
+								profesor.setNombre(contenidoCelda);
+								profesor.setApellidos("");
+
+								profesores.add(profesor);
+							}
 						}
+
+						if (cell.getColumnIndex() >= 20 && cell.getRowIndex() == 2) {
+
+							if (cell.getColumnIndex() % 2 == 0) {
+
+								String contenidoCelda = formatter.formatCellValue(cell);
+								String nuevoContenido = contenidoCelda.replace(",", ".");
+
+								horas.add(Float.parseFloat(nuevoContenido));
+							}
+						}
+
+						if (cell.getRowIndex() == 3)
+							break;
 					}
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		for (int i = 0; i < profesores.size(); i++)
+			profesores.get(i).setHoras(horas.get(i));
 
 		return profesores;
 	}

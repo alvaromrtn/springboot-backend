@@ -46,7 +46,7 @@ public class AsignaturasExcel_Service {
 						if (cell.getRowIndex() >= 2) {
 
 							String contenidoCelda = formatter.formatCellValue(cell);
-							
+
 							if (cell.getColumnIndex() == 1)
 								asignatura.setCodigoAsignatura(Integer.parseInt(contenidoCelda));
 							if (cell.getColumnIndex() == 2)
@@ -105,7 +105,7 @@ public class AsignaturasExcel_Service {
 						if (cell.getRowIndex() >= 2) {
 
 							String contenidoCelda = formatter.formatCellValue(cell);
-							
+
 							if (cell.getColumnIndex() == 1)
 								asignatura.setCodigoAsignatura(Integer.parseInt(contenidoCelda));
 							if (cell.getColumnIndex() == 2)
@@ -122,10 +122,10 @@ public class AsignaturasExcel_Service {
 								asignatura.setCreditosTeoria(contenidoCelda);
 							if (cell.getColumnIndex() == 12)
 								asignatura.setCreditosPractica(contenidoCelda);
-							if (cell.getColumnIndex() == columna_profesor)
-								asignatura.setHorasTotales(Integer.parseInt(contenidoCelda));
-							if (cell.getColumnIndex() == columna_profesor + 1) {
-								asignatura.setHorasCuat1(Integer.parseInt(contenidoCelda));
+							if (cell.getColumnIndex() == columna_profesor) {
+								String nuevoContenido = contenidoCelda.replace(",", ".");
+								asignatura.setHorasTotales(Float.parseFloat(nuevoContenido));
+								
 								asignatura.setId(cell.getRowIndex());
 								asignaturas.add(asignatura);
 							}

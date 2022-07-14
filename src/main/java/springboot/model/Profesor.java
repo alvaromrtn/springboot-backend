@@ -16,7 +16,8 @@ public class Profesor {
 	@Column(name = "apellidos", nullable = false)
 	private String apellidos;
 
-	private String correo;
+	@Column(name = "horas", nullable = false)
+	private float horas;
 
 	public Profesor() {
 	}
@@ -45,12 +46,12 @@ public class Profesor {
 		this.apellidos = apellidos;
 	}
 
-	public String getCorreo() {
-		return correo;
+	public float getHoras() {
+		return horas;
 	}
 
-	public void setCorreo(String correo) {
-		this.correo = correo;
+	public void setHoras(float horas) {
+		this.horas = horas;
 	}
 
 }

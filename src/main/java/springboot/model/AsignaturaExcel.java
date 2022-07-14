@@ -37,10 +37,10 @@ public class AsignaturaExcel {
 	private String creditos_practica;
 	
 	@Column(name = "horas_totales", nullable = false)
-	private int horas_totales;
+	private float horas_totales;
 	
 	@Column(name = "horas_cuat1", nullable = false)
-	private int horas_cuat1;
+	private float horas_cuat1;
 
 	public AsignaturaExcel() {
 	}
@@ -117,19 +117,19 @@ public class AsignaturaExcel {
 		this.creditos_practica = creditos_practica;
 	}
 	
-	public int getHorasTotales() {
+	public float getHorasTotales() {
 		return horas_totales;
 	}
 
-	public void setHorasTotales(int horas_totales) {
+	public void setHorasTotales(float horas_totales) {
 		this.horas_totales = horas_totales;
 	}
 	
-	public int getHorasCuat1() {
+	public float getHorasCuat1() {
 		return horas_cuat1;
 	}
 
-	public void setHorasCuat1(int horas_cuat1) {
+	public void setHorasCuat1(float horas_cuat1) {
 		this.horas_cuat1 = horas_cuat1;
 	}
 

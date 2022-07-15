@@ -15,15 +15,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import springboot.config.Config;
-import springboot.model.Asignatura;
 import springboot.model.AsignaturaProfesor;
 
 @Service
-public class Asignaturas_Service {
+public class AsignaturasProfesor_Service {
 
-	public List<Asignatura> getAsignaturas() {
+	public List<AsignaturaProfesor> getAsignaturasProfesor(int columna_profesor) {
 
-		List<Asignatura> asignaturas = new ArrayList<>();
+		List<AsignaturaProfesor> asignaturas = new ArrayList<>();
 
 		try {
 			String rutaArchivoExcel = Config.DATABASE;
@@ -40,7 +39,7 @@ public class Asignaturas_Service {
 					Row siguienteFila = iterador.next();
 					Iterator<Cell> iteradorCelda = siguienteFila.cellIterator();
 
-					Asignatura asignatura = new Asignatura();
+					AsignaturaProfesor asignatura = new AsignaturaProfesor();
 
 					while (iteradorCelda.hasNext()) {
 						Cell celda = iteradorCelda.next();
@@ -63,8 +62,11 @@ public class Asignaturas_Service {
 								asignatura.setCaracterAsignatura(contenidoCelda);
 							if (celda.getColumnIndex() == 11)
 								asignatura.setCreditosTeoria(contenidoCelda);
-							if (celda.getColumnIndex() == 12) {
+							if (celda.getColumnIndex() == 12)
 								asignatura.setCreditosPractica(contenidoCelda);
+							if (celda.getColumnIndex() == columna_profesor) {
+								String nuevoContenido = contenidoCelda.replace(",", ".");
+								asignatura.setHorasTotales(Float.parseFloat(nuevoContenido));
 
 								asignatura.setId(celda.getRowIndex());
 								asignaturas.add(asignatura);
@@ -79,5 +81,4 @@ public class Asignaturas_Service {
 
 		return asignaturas;
 	}
-
 }

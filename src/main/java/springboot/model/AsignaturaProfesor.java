@@ -6,8 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "asignatura")
-public class Asignatura {
+@Table(name = "asignaturaProfesor")
+public class AsignaturaProfesor {
 
 	@Id
 	private long id;
@@ -36,7 +36,13 @@ public class Asignatura {
 	@Column(name = "creditos_practica", nullable = false)
 	private String creditos_practica;
 
-	public Asignatura() {
+	@Column(name = "horas_totales", nullable = false)
+	private float horas_totales;
+
+	@Column(name = "horas_cuat1", nullable = false)
+	private float horas_cuat1;
+
+	public AsignaturaProfesor() {
 	}
 
 	public long getId() {
@@ -109,6 +115,22 @@ public class Asignatura {
 
 	public void setCreditosPractica(String creditos_practica) {
 		this.creditos_practica = creditos_practica;
+	}
+
+	public float getHorasTotales() {
+		return horas_totales;
+	}
+
+	public void setHorasTotales(float horas_totales) {
+		this.horas_totales = horas_totales;
+	}
+
+	public float getHorasCuat1() {
+		return horas_cuat1;
+	}
+
+	public void setHorasCuat1(float horas_cuat1) {
+		this.horas_cuat1 = horas_cuat1;
 	}
 
 }

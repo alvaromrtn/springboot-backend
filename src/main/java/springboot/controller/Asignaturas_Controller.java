@@ -18,8 +18,10 @@ import org.xml.sax.SAXException;
 
 import springboot.model.AsignaturaTitulacion;
 import springboot.model.Asignatura;
+import springboot.model.AsignaturaProfesor;
 import springboot.request.Asignatura_Request;
 import springboot.request.Profesor_Request;
+import springboot.service.asignaturas.AsignaturasProfesor_Service;
 import springboot.service.asignaturas.AsignaturasTitulacion_Service;
 import springboot.service.asignaturas.Asignaturas_Service;
 
@@ -33,6 +35,9 @@ public class Asignaturas_Controller {
 
 	@Autowired
 	private Asignaturas_Service asignaturas_Service;
+	
+	@Autowired
+	private AsignaturasProfesor_Service asignaturasProfesor_Service;
 
 	@PostMapping("/asignaturasTitulacion")
 	public List<AsignaturaTitulacion> getAsignaturasTitulacion(@RequestBody Asignatura_Request data) throws IOException,
@@ -53,13 +58,13 @@ public class Asignaturas_Controller {
 		return asignaturas;
 	}
 
-	@PostMapping("/asignaturasProfesor_excel")
-	public List<Asignatura> getAsignaturasProfesor(@RequestBody Profesor_Request data) throws IOException,
+	@PostMapping("/asignaturasProfesor")
+	public List<AsignaturaProfesor> getAsignaturasProfesor(@RequestBody Profesor_Request data) throws IOException,
 			ParserConfigurationException, SAXException, KeyManagementException, NoSuchAlgorithmException {
 
 		int columna_profesor = data.getColumna();
 
-		List<Asignatura> asignaturas = asignaturas_Service.getAsignaturasProfesor(columna_profesor);
+		List<AsignaturaProfesor> asignaturas = asignaturasProfesor_Service.getAsignaturasProfesor(columna_profesor);
 
 		return asignaturas;
 	}

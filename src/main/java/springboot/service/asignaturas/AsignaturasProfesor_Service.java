@@ -44,7 +44,7 @@ public class AsignaturasProfesor_Service {
 					while (iteradorCelda.hasNext()) {
 						Cell celda = iteradorCelda.next();
 
-						if (celda.getRowIndex() >= 2) {
+						if (celda.getRowIndex() > 2) {
 
 							String contenidoCelda = formateador.formatCellValue(celda);
 

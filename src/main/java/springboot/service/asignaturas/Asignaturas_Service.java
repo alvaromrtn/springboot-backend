@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import springboot.config.Config;
 import springboot.model.Asignatura;
-import springboot.model.AsignaturaProfesor;
 
 @Service
 public class Asignaturas_Service {

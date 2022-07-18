@@ -31,13 +31,21 @@ import springboot.service.asignaturas.Asignaturas_Service;
 public class Asignaturas_Controller {
 
 	@Autowired
+	private Asignaturas_Service asignaturas_Service;
+
+	@Autowired
 	private AsignaturasTitulacion_Service asignaturasTitulacion_Service;
 
 	@Autowired
-	private Asignaturas_Service asignaturas_Service;
-	
-	@Autowired
 	private AsignaturasProfesor_Service asignaturasProfesor_Service;
+
+	@GetMapping("/asignaturas")
+	public List<Asignatura> getAsignaturas() throws IOException, ParserConfigurationException, SAXException {
+
+		List<Asignatura> asignaturas = asignaturas_Service.getAsignaturas();
+
+		return asignaturas;
+	}
 
 	@PostMapping("/asignaturasTitulacion")
 	public List<AsignaturaTitulacion> getAsignaturasTitulacion(@RequestBody Asignatura_Request data) throws IOException,
@@ -45,15 +53,8 @@ public class Asignaturas_Controller {
 
 		int codigo_titulacion = data.getCodigo();
 
-		List<AsignaturaTitulacion> asignaturas = asignaturasTitulacion_Service.getAsignaturasTitulacion(codigo_titulacion);
-
-		return asignaturas;
-	}
-
-	@GetMapping("/asignaturas")
-	public List<Asignatura> getAsignaturas() throws IOException, ParserConfigurationException, SAXException {
-
-		List<Asignatura> asignaturas = asignaturas_Service.getAsignaturas();
+		List<AsignaturaTitulacion> asignaturas = asignaturasTitulacion_Service
+				.getAsignaturasTitulacion(codigo_titulacion);
 
 		return asignaturas;
 	}

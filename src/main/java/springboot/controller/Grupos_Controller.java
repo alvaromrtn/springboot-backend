@@ -22,9 +22,7 @@ import springboot.service.grupos.GruposTeoria_Service;
 
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin("http://localhost:8081/")
-//@CrossOrigin("*")
-@CrossOrigin(origins = "*", allowedHeaders="*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Grupos_Controller {
 
 	@Autowired
@@ -34,8 +32,8 @@ public class Grupos_Controller {
 	private GruposPractica_Service gruposPractica_Service;
 
 	@PostMapping("/gruposTeoria")
-	public List<Grupo> getGruposTeoria(@RequestBody Grupo_Request data)
-			throws IOException, ParserConfigurationException, SAXException, KeyManagementException, NoSuchAlgorithmException {
+	public List<Grupo> getGruposTeoria(@RequestBody Grupo_Request data) throws IOException,
+			ParserConfigurationException, SAXException, KeyManagementException, NoSuchAlgorithmException {
 
 		int codigo_asignatura = data.getCodigo();
 
@@ -45,8 +43,8 @@ public class Grupos_Controller {
 	}
 
 	@PostMapping("/gruposPractica")
-	public List<Grupo> getGruposPractica(@RequestBody Grupo_Request data)
-			throws IOException, ParserConfigurationException, SAXException, KeyManagementException, NoSuchAlgorithmException {
+	public List<Grupo> getGruposPractica(@RequestBody Grupo_Request data) throws IOException,
+			ParserConfigurationException, SAXException, KeyManagementException, NoSuchAlgorithmException {
 
 		int codigo_asignatura = data.getCodigo();
 

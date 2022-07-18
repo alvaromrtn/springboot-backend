@@ -20,15 +20,15 @@ import springboot.service.titulaciones.Titulaciones_Service;
 
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin("http://localhost:8081/")
-@CrossOrigin(origins = "*", allowedHeaders="*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Titulaciones_Controller {
 
 	@Autowired
 	private Titulaciones_Service titulaciones_Service;
 
 	@GetMapping("/titulaciones")
-	public List<Titulacion> getTitulaciones() throws IOException, ParserConfigurationException, SAXException, UnsupportedOperationException, NoSuchAlgorithmException, SOAPException, KeyManagementException {
+	public List<Titulacion> getTitulaciones() throws IOException, ParserConfigurationException, SAXException,
+			UnsupportedOperationException, NoSuchAlgorithmException, SOAPException, KeyManagementException {
 
 		List<Titulacion> titulaciones = titulaciones_Service.getListadoTitulaciones();
 

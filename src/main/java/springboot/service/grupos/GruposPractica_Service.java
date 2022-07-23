@@ -28,6 +28,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import springboot.model.Grupo;
+import springboot.utils.ObtenerCuatrimestre;
+import springboot.utils.ObtenerDia;
 import springboot.utils.Utils;
 import springboot.utils.Utils.TrustAllCertificates;
 
@@ -123,7 +125,8 @@ public class GruposPractica_Service {
 						grupo.setCodigoAula(Integer.parseInt(eElement.getElementsByTagName("ax21:codigo_aula").item(n).getTextContent()));
 						grupo.setCodigoGrupo(Integer.parseInt(eElement.getElementsByTagName("ax21:codigo_grupo").item(n).getTextContent()));
 						grupo.setCodigoProfesor(Integer.parseInt(eElement.getElementsByTagName("ax21:codigo_profesor").item(n).getTextContent()));
-						grupo.setHorarioDiaSemana(Integer.parseInt(	eElement.getElementsByTagName("ax21:horario_dia_semana").item(n).getTextContent()));
+						String dia = ObtenerDia.getNombreDia(Integer.parseInt(eElement.getElementsByTagName("ax21:horario_dia_semana").item(n).getTextContent()));
+						grupo.setHorarioDiaSemana(dia);
 						grupo.setHorarioHoraFin(eElement.getElementsByTagName("ax21:horario_hora_fin").item(n).getTextContent());
 						grupo.setHorarioHoraInicio(eElement.getElementsByTagName("ax21:horario_hora_inicio").item(n).getTextContent());
 						grupo.setHorarioQuincenal(eElement.getElementsByTagName("ax21:horario_quincenal").item(n).getTextContent());
@@ -133,7 +136,8 @@ public class GruposPractica_Service {
 						grupo.setNombreGrupo(eElement.getElementsByTagName("ax21:nombre_grupo").item(n).getTextContent());
 						grupo.setNombreProfesor(eElement.getElementsByTagName("ax21:nombre_profesor").item(n).getTextContent());
 						grupo.setNumeroAlumnos(Integer.parseInt(eElement.getElementsByTagName("ax21:numero_alumnos").item(n).getTextContent()));
-						grupo.setPeriodo(eElement.getElementsByTagName("ax21:periodo").item(n).getTextContent());
+						String cuatrimestre = ObtenerCuatrimestre.getNombreCuatrimestre(eElement.getElementsByTagName("ax21:periodo").item(n).getTextContent());
+						grupo.setPeriodo(cuatrimestre);
 
 						gruposPractica.add(grupo);
 					}

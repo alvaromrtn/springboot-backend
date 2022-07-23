@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import springboot.config.Config;
 import springboot.model.Asignatura;
+import springboot.utils.ObtenerCuatrimestre;
 
 @Service
 public class Asignaturas_Service {
@@ -57,7 +58,7 @@ public class Asignaturas_Service {
 							if (celda.getColumnIndex() == 8)
 								asignatura.setCursoAsignatura(contenidoCelda);
 							if (celda.getColumnIndex() == 9)
-								asignatura.setPeriodoAsignatura(contenidoCelda);
+								asignatura.setPeriodoAsignatura(ObtenerCuatrimestre.getNombreCuatrimestre(contenidoCelda));
 							if (celda.getColumnIndex() == 10)
 								asignatura.setCaracterAsignatura(contenidoCelda);
 							if (celda.getColumnIndex() == 11)

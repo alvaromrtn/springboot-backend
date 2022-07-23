@@ -28,6 +28,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import springboot.model.AsignaturaTitulacion;
+import springboot.utils.ObtenerCuatrimestre;
 import springboot.utils.Utils;
 import springboot.utils.Utils.TrustAllCertificates;
 
@@ -126,7 +127,8 @@ public class AsignaturasTitulacion_Service {
 					asignatura.setCreditosTeoria(Float.parseFloat(eElement.getElementsByTagName("ax211:creditos_teoria").item(n).getTextContent()));
 					asignatura.setCursoAsignatura(Integer.parseInt(eElement.getElementsByTagName("ax211:curso_asignatura").item(n).getTextContent()));
 					asignatura.setNombreAsignatura(eElement.getElementsByTagName("ax211:nombre_asignatura").item(n).getTextContent());
-					asignatura.setPeriodoAsignatura(eElement.getElementsByTagName("ax211:periodo_asignatura").item(n).getTextContent());
+					String cuatrimestre = ObtenerCuatrimestre.getNombreCuatrimestre(eElement.getElementsByTagName("ax211:periodo_asignatura").item(n).getTextContent());
+					asignatura.setPeriodoAsignatura(cuatrimestre);
 					asignatura.setResponsableAsignatura(eElement.getElementsByTagName("ax211:responsable_asignatura").item(n).getTextContent());
 					asignatura.setTitulacionAsignatura(eElement.getElementsByTagName("ax211:titulacion_asignatura").item(n).getTextContent());
 

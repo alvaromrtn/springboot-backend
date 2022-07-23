@@ -22,7 +22,7 @@ public class Grupo {
 	private int codigo_profesor;
 
 	@Column(name = "horario_dia_semana", nullable = false)
-	private int horario_dia_semana;
+	private String horario_dia_semana;
 
 	@Column(name = "horario_hora_fin", nullable = false)
 	private String horario_hora_fin;
@@ -89,11 +89,11 @@ public class Grupo {
 		this.codigo_profesor = codigo_profesor;
 	}
 
-	public int getHorarioDiaSemana() {
+	public String getHorarioDiaSemana() {
 		return horario_dia_semana;
 	}
 
-	public void setHorarioDiaSemana(int horario_dia_semana) {
+	public void setHorarioDiaSemana(String horario_dia_semana) {
 		this.horario_dia_semana = horario_dia_semana;
 	}
 

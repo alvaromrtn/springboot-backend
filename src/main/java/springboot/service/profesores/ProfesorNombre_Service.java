@@ -13,14 +13,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import springboot.config.Config;
+import springboot.model.Profesor;
 import springboot.utils.ObtenerNombreApellidos;
 
 @Service
 public class ProfesorNombre_Service {
 	
-	public String getProfesorNombre(int columna_profesor) {
+	public Profesor getProfesorNombre(int columna_profesor) {
 
-		String nombre = "";
+		Profesor profesor = new Profesor();
 
 		try {
 			String rutaArchivoExcel = Config.DATABASE;
@@ -47,8 +48,10 @@ public class ProfesorNombre_Service {
 								String nombre_profesor = ObtenerNombreApellidos.getNombre(contenidoCelda);
 								String apellidos_profesor = ObtenerNombreApellidos.getApellidos(contenidoCelda);
 								
-								nombre = ObtenerNombreApellidos
-										.getNombreCompleto(nombre_profesor, apellidos_profesor);
+								profesor.setNombre(nombre_profesor);
+								profesor.setApellidos(apellidos_profesor);
+								profesor.setNombreCompleto(ObtenerNombreApellidos
+										.getNombreCompleto(nombre_profesor, apellidos_profesor));
 								
 								break;
 							}
@@ -59,7 +62,7 @@ public class ProfesorNombre_Service {
 			e.printStackTrace();
 		}
 
-		return nombre;
+		return profesor;
 	}
 
 }

@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import springboot.model.Profesor;
+import springboot.request.Asignatura_Request;
 import springboot.request.Profesor_Request;
 import springboot.service.profesores.ProfesorNombre_Service;
+import springboot.service.profesores.ProfesoresAsignatura_Service;
 import springboot.service.profesores.Profesores_Service;
 
 @RestController
@@ -25,10 +27,12 @@ public class Profesores_Controller {
 
 	@Autowired
 	private Profesores_Service profesores_Service;
-	
+
+	@Autowired
+	private ProfesoresAsignatura_Service profesoresAsignatura_Service;
+
 	@Autowired
 	private ProfesorNombre_Service profesorNombre_Service;
-	
 
 	@GetMapping("/profesores")
 	public List<Profesor> getProfesores() throws FileNotFoundException, IOException, InvalidFormatException {
@@ -37,13 +41,27 @@ public class Profesores_Controller {
 
 		return profesores;
 	}
-	
+
+	@PostMapping("/profesoresAsignatura")
+	public List<Profesor> getProfesorNombre(@RequestBody Asignatura_Request data)
+			throws FileNotFoundException, IOException, InvalidFormatException {
+
+		int id = data.getCodigo();
+
+		List<Profesor> profesores = profesoresAsignatura_Service.getProfesoresAsignatura(id);
+
+		return profesores;
+	}
+
 	@PostMapping("/profesorNombre")
-	public String getProfesorNombre(@RequestBody Profesor_Request data) throws FileNotFoundException, IOException, InvalidFormatException {
+	public String getProfesorNombre(@RequestBody Profesor_Request data)
+			throws FileNotFoundException, IOException, InvalidFormatException {
 
 		int columna_profesor = data.getColumna();
-		
-		String nombre = profesorNombre_Service.getProfesorNombre(columna_profesor);
+
+		Profesor profesor = profesorNombre_Service.getProfesorNombre(columna_profesor);
+
+		String nombre = profesor.getNombreCompleto();
 
 		return nombre;
 	}

@@ -76,6 +76,7 @@ public class ProfesoresAsignatura_Service {
 			Profesor profesor = new Profesor();
 
 			profesor = profesorNombre_Service.getProfesorNombre(columna_profesor.get(i));
+			profesor.setId(columna_profesor.get(i));
 			profesor.setHoras(horas_profesor.get(i));
 
 			profesores.add(profesor);

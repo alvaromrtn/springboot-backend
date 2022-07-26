@@ -1,5 +1,6 @@
 package springboot.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
 import springboot.model.AsignaturaTitulacion;
 import springboot.model.Asignatura;
 import springboot.model.AsignaturaProfesor;
 import springboot.request.Asignatura_Request;
 import springboot.request.Profesor_Request;
+import springboot.service.asignaturas.AsignaturaNombre_Service;
 import springboot.service.asignaturas.AsignaturasProfesor_Service;
 import springboot.service.asignaturas.AsignaturasTitulacion_Service;
 import springboot.service.asignaturas.Asignaturas_Service;
@@ -38,6 +42,9 @@ public class Asignaturas_Controller {
 
 	@Autowired
 	private AsignaturasProfesor_Service asignaturasProfesor_Service;
+
+	@Autowired
+	private AsignaturaNombre_Service asignaturaNombre_Service;
 
 	@GetMapping("/asignaturas")
 	public List<Asignatura> getAsignaturas() throws IOException, ParserConfigurationException, SAXException {
@@ -68,6 +75,17 @@ public class Asignaturas_Controller {
 		List<AsignaturaProfesor> asignaturas = asignaturasProfesor_Service.getAsignaturasProfesor(columna_profesor);
 
 		return asignaturas;
+	}
+
+	@PostMapping("/asignaturaNombre")
+	public String getAsignaturaNombre(@RequestBody Asignatura_Request data)
+			throws FileNotFoundException, IOException, InvalidFormatException {
+
+		int id = data.getCodigo();
+
+		String nombre = asignaturaNombre_Service.getAsignaturaNombre(id);
+
+		return nombre;
 	}
 
 }
